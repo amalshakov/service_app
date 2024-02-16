@@ -7,6 +7,9 @@ class Service(models.Model):
     name = models.CharField(max_length=50)
     full_price = models.PositiveIntegerField()
 
+    def __str__(self) -> str:
+        return f"{self.name}"
+
 
 class Plan(models.Model):
     PLAN_TYPES = (
@@ -20,6 +23,9 @@ class Plan(models.Model):
         validators=[MaxValueValidator(100)],
     )
 
+    def __str__(self) -> str:
+        return f"{self.plan_type}"
+
 
 class Subscription(models.Model):
     client = models.ForeignKey(
@@ -31,3 +37,6 @@ class Subscription(models.Model):
     plan = models.ForeignKey(
         Plan, related_name="subscriptions", on_delete=models.PROTECT
     )
+
+    def __str__(self) -> str:
+        return f"{self.client} - {self.service} - {self.plan}"
