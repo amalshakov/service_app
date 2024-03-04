@@ -31,10 +31,13 @@ services:
     command: -A celery_app.app worker --loglevel=info
     volumes:
       - ./backend:/backend
+    env_file:
+      - .env
     links:
       - redis
     depends_on:
       - redis
+      - db
 
   flower:
     build: 
