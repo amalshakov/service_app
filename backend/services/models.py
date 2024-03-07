@@ -81,4 +81,4 @@ class Subscription(models.Model):
         return result
 
 
-post_delete.connect(delete_cache_total_sum)
+post_delete.connect(delete_cache_total_sum, sender=Subscription)
