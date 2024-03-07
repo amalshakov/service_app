@@ -3,8 +3,10 @@ import time
 
 from celery import shared_task
 from celery_singleton import Singleton
-from django.db.models import F
+from django.conf import settings
+from django.core.cache import cache
 from django.db import transaction
+from django.db.models import F
 
 
 @shared_task(base=Singleton)
@@ -12,7 +14,7 @@ def set_price(subscription_id):
     from services.models import Subscription
 
     with transaction.atomic():
-        time.sleep(5)
+        # time.sleep(5)
         subscription = (
             Subscription.objects.select_for_update()
             .filter(id=subscription_id)
@@ -22,11 +24,10 @@ def set_price(subscription_id):
             )
             .first()
         )
-
-        time.sleep(20)
-
+        # time.sleep(20)
         subscription.price = subscription.annotated_price
         subscription.save()
+    cache.delete(settings.PRICE_CACHE_NAME)
 
 
 @shared_task(base=Singleton)
@@ -37,6 +38,7 @@ def set_comment(subscription_id):
         subscription = Subscription.objects.select_for_update().get(
             id=subscription_id
         )
-        time.sleep(27)
+        # time.sleep(27)
         subscription.comment = str(dt.datetime.now())
         subscription.save()
+    cache.delete(settings.PRICE_CACHE_NAME)

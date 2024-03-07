@@ -1,8 +1,10 @@
-from typing import Any
+from typing import Any, Iterable
 
 from clients.models import Client
 from django.core.validators import MaxValueValidator
 from django.db import models
+from django.db.models.signals import post_delete
+from services.signals import delete_cache_total_sum
 from services.tasks import set_comment, set_price
 
 
@@ -54,16 +56,29 @@ class Plan(models.Model):
 
 class Subscription(models.Model):
     client = models.ForeignKey(
-        Client, related_name="subscriptions", on_delete=models.PROTECT
+        Client, related_name="subscriptions", on_delete=models.CASCADE
     )
     service = models.ForeignKey(
-        Service, related_name="subscriptions", on_delete=models.PROTECT
+        Service, related_name="subscriptions", on_delete=models.CASCADE
     )
     plan = models.ForeignKey(
-        Plan, related_name="subscriptions", on_delete=models.PROTECT
+        Plan, related_name="subscriptions", on_delete=models.CASCADE
     )
     price = models.PositiveIntegerField(default=0)
     comment = models.CharField(max_length=50, default="default")
 
     def __str__(self) -> str:
         return f"{self.client} - {self.service} - {self.plan}"
+
+    class Meta:
+        ordering = ("id",)
+
+    def save(self, *args, **kwargs) -> None:
+        creating = not bool(self.id)
+        result = super().save(*args, **kwargs)
+        if creating:
+            set_price.delay(self.id)
+        return result
+
+
+post_delete.connect(delete_cache_total_sum)
