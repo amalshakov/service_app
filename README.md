@@ -44,4 +44,4 @@ docker-compose run --rm backend-app sh -c "python manage.py createsuperuser"
 # Дополнительно:
 - .env выложен в Git. каюсь...
 
-СДЕЛАЙ ВЕРНУЮ СОРТИРОВКУ!!!!!
+Автоматически подтягивать isort.cfg при сохранении файла
