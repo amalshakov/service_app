@@ -21,7 +21,7 @@ class Service(models.Model):
             for subscription in self.subscriptions.all():
                 set_price.delay(subscription.id)
                 set_comment.delay(subscription.id)
-            return super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f"{self.name}"
@@ -48,7 +48,7 @@ class Plan(models.Model):
             for subscription in self.subscriptions.all():
                 set_price.delay(subscription.id)
                 set_comment.delay(subscription.id)
-            return super().save(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def __str__(self) -> str:
         return f"{self.plan_type}"

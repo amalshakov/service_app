@@ -7,9 +7,7 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = (
-    "django-insecure-9@76n5@sv0&8u@n+oqhn214+io+d1*r7(41s6=yr@e2f)foueb"
-)
+SECRET_KEY = os.getenv("SECRET_KEY", "qwerty")
 
 DEBUG = True
 
@@ -83,7 +81,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "UTC"
 
