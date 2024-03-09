@@ -1,11 +1,11 @@
 from django.conf import settings
-from clients.models import Client
-from django.db.models import F, Prefetch, Sum
 from django.core.cache import cache
+from django.db.models import Prefetch, Sum
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from .models import Subscription
-from .serializers import SubscriptionSerializer
+from clients.models import Client
+from services.models import Subscription
+from services.serializers import SubscriptionSerializer
 
 
 class SubscriptionView(ReadOnlyModelViewSet):

@@ -13,13 +13,6 @@ class SubscriptionAdmin(admin.ModelAdmin):
         "price",
         "comment",
     )
-    # list_filter = (
-    #     "plan",
-    #     "service",
-    #     "start_date",
-    #     "end_date",
-    # )
-    # search_fields = ["id"]
 
 
 admin.site.register(Plan)

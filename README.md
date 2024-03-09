@@ -41,6 +41,7 @@ docker-compose run --rm backend-app sh -c "python manage.py createsuperuser"
 - Подписки
     - http://127.0.0.1:8000/api/subscriptions/
 
-
+# Дополнительно:
+- .env выложен в Git. каюсь...
 
 СДЕЛАЙ ВЕРНУЮ СОРТИРОВКУ!!!!!

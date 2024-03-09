@@ -1,10 +1,11 @@
 import json
 import os
 
-from clients.models import Client
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
+
+from clients.models import Client
 from services.models import Plan, Service, Subscription
 
 User = get_user_model()
